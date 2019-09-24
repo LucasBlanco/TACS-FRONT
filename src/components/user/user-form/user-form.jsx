@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Input, Icon, Button } from 'antd'
+import { Form, Input, Icon } from 'antd'
 
 class UserForm extends Component {
 
@@ -15,28 +15,39 @@ class UserForm extends Component {
 
     render() {
         const { getFieldDecorator } = this.props.form
+
+        const rules = {
+            username: { required: true, message: 'Please input your username!' },
+            password: { required: true, message: 'Please input your Password!' }
+        }
+
+        const decorators = {
+            username: getFieldDecorator('username', { rules: [rules.username] }),
+            password: getFieldDecorator('password', { rules: [rules.password] })
+        }
+
         return (
             <Form onSubmit={this.handleSubmit} className="login-form">
                 <Form.Item>
-                    {getFieldDecorator('username', {
-                        rules: [{ required: true, message: 'Please input your username!' }],
-                    })(
-                        <Input
-                            prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                            placeholder="Username"
-                        />,
-                    )}
+                    {
+                        decorators.username(
+                            <Input
+                                prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                placeholder="Username"
+                            />,
+                        )
+                    }
                 </Form.Item>
                 <Form.Item>
-                    {getFieldDecorator('password', {
-                        rules: [{ required: true, message: 'Please input your Password!' }],
-                    })(
-                        <Input
-                            prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                            type="password"
-                            placeholder="Password"
-                        />,
-                    )}
+                    {
+                        decorators.password(
+                            <Input
+                                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                type="password"
+                                placeholder="Password"
+                            />,
+                        )
+                    }
                 </Form.Item>
                 <Form.Item>
                     {this.props.children}
