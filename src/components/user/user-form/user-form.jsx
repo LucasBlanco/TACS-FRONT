@@ -3,6 +3,8 @@ import { Form, Input, Icon, Button } from 'antd'
 
 class UserForm extends Component {
 
+
+
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
@@ -19,7 +21,7 @@ class UserForm extends Component {
             <Form onSubmit={this.handleSubmit} className="login-form">
                 <Form.Item>
                     {getFieldDecorator('username', {
-                        rules: [{ required: true, message: 'Please input your username!' }],
+                        rules: [{ required: true, message: 'Please input your username!', initialValue: 'Lucas' }],
                     })(
                         <Input
                             prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -29,7 +31,7 @@ class UserForm extends Component {
                 </Form.Item>
                 <Form.Item>
                     {getFieldDecorator('password', {
-                        rules: [{ required: true, message: 'Please input your Password!' }],
+                        rules: [{ required: true, message: 'Please input your Password!', initialValue: 'Lcas' }],
                     })(
                         <Input
                             prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
