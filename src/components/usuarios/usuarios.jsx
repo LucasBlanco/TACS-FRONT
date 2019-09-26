@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Table } from 'antd';
-import { getUsers } from '../../services/user-service';
+import { Table, Row, Col, Button, Modal, List } from 'antd';
+import { getUsers, compare } from '../../services/user-service';
 
 export default class Usuarios extends Component {
 
@@ -9,7 +9,12 @@ export default class Usuarios extends Component {
         super()
         this.state = {
             users: [],
-            selectedIds: []
+            selectedIds: [],
+            comparison: {
+                repositories: [],
+                languages: []
+            },
+            showComparison: false
         }
         getUsers().then(_users => {
             console.log(_users)
@@ -20,6 +25,15 @@ export default class Usuarios extends Component {
         })
     }
 
+    getComparison = () => {
+        console.log(this.state.selectedIds)
+        const [id1, id2] = this.state.selectedIds
+        compare(id1, id2).then(comparison => {
+            this.setState({ comparison, showComparison: true })
+        })
+    }
+
+    hideModal = () => this.setState({ showComparison: false })
 
 
     render() {
@@ -55,6 +69,41 @@ export default class Usuarios extends Component {
             <React.Fragment>
                 <h2>Users</h2>
                 <Table dataSource={this.state.users} columns={columns} rowSelection={rowSelection} />
+                <Row type="flex" justify="end">
+                    <Col>
+                        <Button type="primary" size={10} onClick={() => this.getComparison()}>
+                            Comparar
+                    </Button>
+                    </Col>
+                </Row>
+
+                <Modal
+                    title="Comparison"
+                    visible={this.state.showComparison}
+                    onCancel={this.hideModal}
+                >
+                    <List style={{ marginBottom: '20px' }}
+                        header={<div>Repositories</div>}
+                        bordered
+                        dataSource={this.state.comparison.repositories}
+                        renderItem={item => (
+                            <List.Item>
+                                {item.name}
+                            </List.Item>
+                        )}
+                    />
+                    <List
+                        header={<div>Languages</div>}
+                        bordered
+                        dataSource={this.state.comparison.languages}
+                        renderItem={item => (
+                            <List.Item>
+                                {item}
+                            </List.Item>
+                        )}
+                    />
+                </Modal>
+
             </React.Fragment>
         )
     }
