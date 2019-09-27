@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Table, Divider, Tag } from 'antd';
-import { getFavorites } from '../../services/favorites';
+import { Table, Row, Col, Button } from 'antd';
+import { getFavorites, deleteFavourite } from '../../services/favorites';
 import { Repository } from '../../models/repository';
 
 export default class Favoritos extends Component {
@@ -9,7 +9,8 @@ export default class Favoritos extends Component {
     constructor() {
         super()
         this.state = {
-            favorites: []
+            favorites: [],
+            selectedIds: []
         }
         getFavorites().then(repos => {
 
@@ -20,8 +21,24 @@ export default class Favoritos extends Component {
         })
     }
 
+    deleteSelectedFavorites = () => {
+        this.state.selectedIds.forEach(id => {
+            deleteFavourite(id).then(() => {
+                const filteredFavorites = this.state.favorites.filter(fav => fav.id !== id)
+                this.setState({ favorites: filteredFavorites })
+            })
+        })
+
+    }
+
     render() {
 
+        const rowSelection = {
+            selectedRowKeys: this.state.selectedIds,
+            onChange: (selectedRowKeys, selectedRows) => {
+                this.setState({ selectedIds: selectedRowKeys })
+            }
+        };
 
         const columns = [
             {
@@ -79,7 +96,14 @@ export default class Favoritos extends Component {
         return (
             <React.Fragment>
                 <h2>Favorites</h2>
-                <Table dataSource={this.state.favorites} columns={columns} />
+                <Table dataSource={this.state.favorites} columns={columns} rowSelection={rowSelection} />
+                <Row type="flex" justify="end">
+                    <Col>
+                        <Button type="danger" size={10} onClick={this.deleteSelectedFavorites}>
+                            Delete
+                    </Button>
+                    </Col>
+                </Row>
             </React.Fragment>
         )
     }
