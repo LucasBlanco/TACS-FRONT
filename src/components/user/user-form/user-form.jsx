@@ -3,6 +3,8 @@ import { Form, Input, Icon } from 'antd'
 
 class UserForm extends Component {
 
+
+
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
@@ -48,6 +50,7 @@ class UserForm extends Component {
                             />,
                         )
                     }
+
                 </Form.Item>
                 <Form.Item>
                     {this.props.children}
