@@ -1,4 +1,3 @@
-
 import { post, get } from 'axios'
 import serverRoute from './server-route'
 import { User } from '../models/usuario'

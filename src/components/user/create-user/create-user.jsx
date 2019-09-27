@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import { Button, Col, Row } from 'antd';
 import UserForm from '../user-form/user-form'
+import { createUser } from '../../../services/user-service';
 
 class CreateUser extends Component {
     state = {
     }
 
-    handleSubmit = () => {
+    handleSubmit = (input) => {
+        createUser(input)
         this.props.history.push("/")
     }
+
     render() {
         return (
 
