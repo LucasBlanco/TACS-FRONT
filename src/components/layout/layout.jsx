@@ -9,9 +9,9 @@ import CompararFavoritos from '../comparar-favoritos/comparar-favoritos';
 import Estadisticas from '../estadisticas/estadisticas';
 import Usuarios from '../usuarios/usuarios';
 import Landing from '../landing/landing';
+import authService from '../../services/auth-service'
 
 const { Header, Content, Sider } = Layout;
-
 
 class MainLayout extends Component {
     state = {}
@@ -56,7 +56,7 @@ class MainLayout extends Component {
                             </Link>
                         </Menu.Item>
                         <Menu.Item key="6">
-                            <Link to="/">
+                            <Link to="/" onClick={() => authService.logout()}>
                                 <span className="nav-text">Log out</span>
                             </Link>
                         </Menu.Item>
