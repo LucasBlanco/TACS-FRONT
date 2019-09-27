@@ -10,8 +10,9 @@ class Login extends Component {
     }
 
     handleSubmit = ({ username, password }) => {
-        authService.login({ username, password }).then(() => {
-            auth.login(() => {
+        authService.login({ username, password }).then((loginInfo) => {
+            console.log(loginInfo)
+            auth.login(loginInfo, () => {
                 this.props.history.push("/app")
             })
         })
