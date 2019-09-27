@@ -17,15 +17,16 @@ class UserForm extends Component {
 
     render() {
         const { getFieldDecorator } = this.props.form
-
+        const userRules = this.props.userRules || []
         const rules = {
             username: { required: true, message: 'Please input your username!' },
-            password: { required: true, message: 'Please input your Password!' }
+            password: { required: true, message: 'Please input your Password!' },
+            passwordLength: { min: 4, message: 'The password must have more than 3 characters!' }
         }
 
         const decorators = {
-            username: getFieldDecorator('username', { rules: [rules.username] }),
-            password: getFieldDecorator('password', { rules: [rules.password] })
+            username: getFieldDecorator('username', { rules: [rules.username, ...userRules] }),
+            password: getFieldDecorator('password', { rules: [rules.password, rules.passwordLength] })
         }
 
         return (
