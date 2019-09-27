@@ -10,6 +10,8 @@ export const createUser = ({ username, password }) => {
     })
 }
 
+
+
 export const getUsers = () => {
     return get(serverRoute + "/users")
         .then(response => response.data.map(user => new User(user)))

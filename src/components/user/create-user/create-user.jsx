@@ -1,13 +1,26 @@
 import React, { Component } from 'react';
-import { Button, Col, Row } from 'antd';
+import { Button, Col, Row, message } from 'antd';
 import UserForm from '../user-form/user-form'
+import { createUser } from '../../../services/user-service';
 
 class CreateUser extends Component {
     state = {
     }
 
-    handleSubmit = () => {
-        this.props.history.push("/")
+
+    handleSubmit = ({ username, password }) => {
+        const hide = message.loading('Action in progress..', 0);
+        createUser({ username, password })
+            .then(() => {
+                hide()
+                message.success("El usuario fue creado con exito")
+                this.props.history.push("/")
+            })
+            .catch(error => {
+                hide()
+                message.error(error.message)
+            })
+
     }
 
     uniqueUsername = (rule, value, callback) => {
