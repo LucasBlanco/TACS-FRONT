@@ -11,8 +11,8 @@ class Login extends Component {
 
     handleSubmit = ({ username, password }) => {
         authService.login({ username, password }).then((loginInfo) => {
-            console.log(loginInfo)
-            auth.login(loginInfo, () => {
+            const { userId, token } = loginInfo
+            auth.login(userId, token, () => {
                 this.props.history.push("/app")
             })
         })

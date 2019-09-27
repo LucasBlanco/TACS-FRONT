@@ -4,9 +4,9 @@ class Auth {
         this.autenticated = false
     }
 
-    login(token, callback) {
+    login(userId, token, callback) {
         this.autenticated = true
-        this.userId = 1
+        this.userId = userId
         this.token = token
         callback && callback()
     }
