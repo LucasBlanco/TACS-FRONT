@@ -32,27 +32,22 @@ class MainLayout extends Component {
                     <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} style={{ marginTop: '3rem' }}>
                         <Menu.Item key="1" >
                             <Link to="/app/repositorios">
-                                <span className="nav-text">Repositorios</span>
+                                <span className="nav-text">Repositories</span>
                             </Link>
                         </Menu.Item>
                         <Menu.Item key="2" >
                             <Link to="/app/favoritos">
-                                <span className="nav-text">Favoritos</span>
+                                <span className="nav-text">Favourites</span>
                             </Link>
                         </Menu.Item>
                         <Menu.Item key="3">
                             <Link to="/app/usuarios">
-                                <span className="nav-text">Usuarios</span>
-                            </Link>
-                        </Menu.Item>
-                        <Menu.Item key="4">
-                            <Link to="/app/comparar-favoritos">
-                                <span className="nav-text">Comparar favoritos</span>
+                                <span className="nav-text">Users</span>
                             </Link>
                         </Menu.Item>
                         <Menu.Item key="5">
                             <Link to="/app/estadisticas">
-                                <span className="nav-text">Estadisticas</span>
+                                <span className="nav-text">Stats</span>
                             </Link>
                         </Menu.Item>
                         <Menu.Item key="6">

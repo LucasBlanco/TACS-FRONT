@@ -1,10 +1,8 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
+import { BrowserRouter, Route, Redirect } from 'react-router-dom'
 import MainLayout from './components/layout/layout'
-import Login from './components/user/login/login';
 import auth from './services/auth';
-import Repositorios from './components/repositorios/repositorios';
 import LoginLanding from './components/user/login/login-landing';
 
 function App() {

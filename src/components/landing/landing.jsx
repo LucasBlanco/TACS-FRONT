@@ -5,7 +5,7 @@ export default class Landing extends Component {
         return (
             <Row type="flex" justify="center">
                 <Col >
-                    <img src={require('./customLogo.jpeg')}></img>
+                    <img src={require('./customLogo.jpeg')} alt=""></img>
                 </Col>
             </Row>
 

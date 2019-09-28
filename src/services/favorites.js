@@ -5,13 +5,15 @@ import auth from './auth'
 import { Repository } from '../models/repository'
 
 export const getFavorites = () => {
-    return axios.get(serverRoute + "/users/" + auth.userId + '/favourites')
+    const headers = { Authorization: auth.token }
+    return axios.get(serverRoute + "/users/" + auth.userId + '/favourites', { headers: headers })
         .then(response => response.data.map(
             favorite => new Repository(favorite)
         ))
 }
 
 export const deleteFavourite = (id) => {
-    return axios.delete(serverRoute + "/users/" + auth.userId + '/favourites/' + id)
+    const headers = { Authorization: auth.token }
+    return axios.delete(serverRoute + "/users/" + auth.userId + '/favourites/' + id, { headers: headers })
         .then(response => response.data)
 }
