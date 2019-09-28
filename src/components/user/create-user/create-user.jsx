@@ -13,12 +13,12 @@ class CreateUser extends Component {
         createUser({ username, password })
             .then(() => {
                 hide()
-                message.success("El usuario fue creado con exito")
+                message.success("The user was created successfully")
                 this.props.history.push("/")
             })
             .catch(error => {
                 hide()
-                message.error(error.message)
+                message.error(error.response.data)
             })
 
     }

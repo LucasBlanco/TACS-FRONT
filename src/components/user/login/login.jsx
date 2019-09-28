@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Col, Row } from 'antd';
+import { Button, Col, Row, message } from 'antd';
 import auth from "../../../services/auth"
 import UserForm from '../user-form/user-form';
 import { Link } from 'react-router-dom'
@@ -10,10 +10,16 @@ class Login extends Component {
     }
 
     handleSubmit = ({ username, password }) => {
-        authService.login({ username, password }).then(() => {
-            auth.login(() => {
+        const hide = message.loading('Action in progress..', 0);
+        authService.login({ username, password }).then((loginInfo) => {
+            hide()
+            const { userId, token } = loginInfo
+            auth.login(userId, token, () => {
                 this.props.history.push("/app")
             })
+        }).catch(error => {
+            hide()
+            message.error(error.response.data)
         })
     }
     render() {
