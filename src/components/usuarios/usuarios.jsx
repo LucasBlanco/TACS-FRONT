@@ -85,6 +85,7 @@ export default class Usuarios extends Component {
                     title="Comparison"
                     visible={this.state.showComparison}
                     onCancel={this.hideModal}
+                    onOk={this.hideModal}
                 >
                     <List style={{ marginBottom: '20px' }}
                         header={<div>Repositories</div>}

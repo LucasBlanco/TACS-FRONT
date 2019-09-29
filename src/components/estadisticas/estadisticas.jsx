@@ -29,6 +29,7 @@ export default class Estadisticas extends React.Component {
         return (
             <div>
                 <Form className="ant-advanced-search-form" onSubmit={this.handleSearch}>
+                    <h2>Amount of repositories</h2>
                     <Row gutter={24}>
                         <Col span={8}>
                             <Form.Item label="Since:">
