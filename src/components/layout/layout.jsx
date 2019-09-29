@@ -5,7 +5,6 @@ import { Layout, Menu, Card } from 'antd';
 import { Route, Link } from 'react-router-dom'
 import Repositorios from '../repositorios/repositorios';
 import Favoritos from '../favoritos/favoritos';
-import CompararFavoritos from '../comparar-favoritos/comparar-favoritos';
 import Estadisticas from '../estadisticas/estadisticas';
 import Usuarios from '../usuarios/usuarios';
 import Landing from '../landing/landing';
@@ -63,7 +62,6 @@ class MainLayout extends Component {
                         <Card>
                             <Route path="/app/repositorios" component={Repositorios}></Route>
                             <Route path="/app/favoritos" component={Favoritos}></Route>
-                            <Route path="/app/comparar-favoritos" component={CompararFavoritos}></Route>
                             <Route path="/app/estadisticas" component={Estadisticas}></Route>
                             <Route path="/app/usuarios" component={Usuarios}></Route>
                             <Route exact path="/app" component={Landing}></Route>

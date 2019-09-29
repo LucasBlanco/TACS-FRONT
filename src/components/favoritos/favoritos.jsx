@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Table, Row, Col, Button } from 'antd';
-import { getFavorites, deleteFavourite } from '../../services/favorites';
+import { getOwnFavorites, deleteFavourite } from '../../services/favorites';
 import { Repository } from '../../models/repository';
 
 export default class Favoritos extends Component {
@@ -12,7 +12,7 @@ export default class Favoritos extends Component {
             favorites: [],
             selectedIds: []
         }
-        getFavorites().then(repos => {
+        getOwnFavorites().then(repos => {
 
             const favorites = repos.map(repo => {
                 return { ...repo, key: repo.id }
