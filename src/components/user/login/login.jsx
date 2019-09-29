@@ -19,7 +19,7 @@ class Login extends Component {
             })
         }).catch(error => {
             hide()
-            message.error(error.response.data)
+            message.error(error.response.data);
         })
     }
     render() {

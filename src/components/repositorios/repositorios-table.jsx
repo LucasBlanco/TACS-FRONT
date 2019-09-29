@@ -11,15 +11,10 @@ export const RepositoriosTable = ({ repositorios }) => {
             key: 'name',
         },
         {
-            title: 'Age',
-            dataIndex: 'age',
-            key: 'age',
-        },
-        {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
-        },
+            title: 'Owner',
+            dataIndex: 'owner',
+            key: 'owner',
+        }
     ];
     return (
         <Table dataSource={repositorios} columns={columns} />

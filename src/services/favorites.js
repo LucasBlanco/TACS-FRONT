@@ -30,5 +30,10 @@ export const getAllFavourites = (start, limit, since, to) => {
     }
 
     return axios.get(serverRoute + `/favourites?start=${start}&limit=${limit}${sinceParam}${toParam}`, { headers: headers })
-        .then(response => response.data.map(user => new Repository(user)))
+        .then(response => {
+            return {
+                totalAmount: response.data.totalAmount,
+                repositories: response.data.repositories.map(user => new Repository(user))
+            }
+        })
 }

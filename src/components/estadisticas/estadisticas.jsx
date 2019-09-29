@@ -7,17 +7,18 @@ import { getAllFavourites } from '../../services/favorites';
 
 export default class Estadisticas extends React.Component {
     state = {
-        repositorios: []
+        repositorios: [],
+        totalAmount: 0
     };
 
-    handleSearch = ({ since, to }) => {
-        getAllFavourites(0, 10, since, to).then(repos => {
-            const favorites = repos.map(repo => {
+    handleSearch = (event) => {
+        getAllFavourites(0, 10, event.since, event.to).then(({ totalAmount, repositories }) => {
+            const favorites = repositories.map(repo => {
                 return { ...repo, key: repo.id }
             })
-            this.setState({ repositorios: favorites })
+            this.setState({ repositorios: favorites, totalAmount })
         })
-
+        event.preventDefault();
     };
 
     handleReset = () => {
@@ -49,6 +50,9 @@ export default class Estadisticas extends React.Component {
                                 Clear
                         </Button>
                         </Col>
+                    </Row>
+                    <Row>
+                        <h3> Total amount: {this.state.totalAmount}</h3>
                     </Row>
                     <Row>
                         <RepositoriosTable repositorios={this.state.repositorios} />

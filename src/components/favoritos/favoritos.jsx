@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Table, Row, Col, Button } from 'antd';
 import { getOwnFavorites, deleteFavourite } from '../../services/favorites';
-import { Repository } from '../../models/repository';
 
 export default class Favoritos extends Component {
 
