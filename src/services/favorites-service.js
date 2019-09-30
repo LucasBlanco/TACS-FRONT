@@ -12,10 +12,21 @@ export const getOwnFavorites = () => {
         ))
 }
 
+export const getFavouriteByName = (name) => {
+    const headers = { Authorization: auth.token }
+    return axios.get(serverRoute + "/favourites/" + name, { headers: headers })
+        .then(response => new Repository(response.data))
+}
+
 export const deleteFavourite = (id) => {
     const headers = { Authorization: auth.token }
     return axios.delete(serverRoute + "/users/" + auth.userId + '/favourites/' + id, { headers: headers })
         .then(response => response.data)
+}
+
+export const addFavourite = (repo) => {
+    const headers = { Authorization: auth.token }
+    return axios.post(serverRoute + "/users/" + auth.userId + '/favourites', repo, { headers: headers })
 }
 
 export const getAllFavourites = (start, limit, since, to) => {

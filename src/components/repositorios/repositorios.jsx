@@ -1,102 +1,77 @@
 import React, { Component } from 'react'
-import { Row, Card, Typography, Col, Form, Input, Button, InputNumber } from 'antd';
+import { Row, message, Col, Button } from 'antd';
 import { RepositoriosTable } from './repositorios-table';
+import { getRepositories } from '../../services/repositories-service';
+import { addFavourite } from '../../services/favorites-service';
+import RepositoryFilterForm from './repository-filters';
 
-const { Title } = Typography
 
 class Repositorios extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            repositorios: [
-                {
-                    key: '1',
-                    name: 'Mike',
-                    age: 32,
-                    address: '10 Downing Street',
-                },
-                {
-                    key: '2',
-                    name: 'John',
-                    age: 42,
-                    address: '10 Downing Street',
-                },
-            ]
+            repositories: [],
+            selectedIds: []
         }
     }
 
+    handleSubmit = (repositoryFilters) => {
+        const hide = message.loading('Action in progress..', 0);
+        getRepositories(repositoryFilters)
+            .then(({ nextPage, repositories }) => {
+                hide()
+                this.setState({ repositories: repositories.map(repo => ({ ...repo, key: repo.id })) })
+            }).catch(error => {
+                hide()
+                error.response && message.error(error.response.data);
+            })
+    }
+
+    addToFavourites = () => {
+        const hide = message.loading('Action in progress..', 0);
+        this.state.selectedIds
+            .map(id => this.state.repositories.find(r => r.id === id))
+            .forEach(repo => {
+                addFavourite(repo)
+                    .then(() => {
+                        hide()
+                        message.success("The repository was added to your favourite's list");
+                    }).catch(error => {
+                        hide()
+                        error.response && message.error(error.response.data);
+                    })
+            })
+
+    }
+
+
     render() {
-        const formItemLayout = {
-            labelCol: {
-                xs: { span: 24 },
-                sm: { span: 8 },
-            },
-            wrapperCol: {
-                xs: { span: 24 },
-                sm: { span: 16 },
-            },
+        const rowSelection = {
+            selectedRowKeys: this.state.selectedIds,
+            onChange: (selectedRowKeys, selectedRows) => {
+                this.setState({ selectedIds: selectedRowKeys })
+            }
         };
         return (
             <Row>
                 <Row style={{ paddingBottom: 20 }}>
-                    <Card>
-                        <Row>
-                            <Title level={2}>Filtros</Title>
-                        </Row>
-                        <Row gutter={24} type="flex" justify="start">
-                            <Form  {...formItemLayout} onSubmit={this.handleSubmit}>
-                                <Col lg={8}>
-                                    <Form.Item label="Issues">
-                                        <InputNumber
-                                            placeholder="1"
-                                            min="0"
-                                        />
+                    <RepositoryFilterForm handleSubmit={this.handleSubmit}>
 
-                                    </Form.Item>
-                                </Col>
-                                <Col lg={8}>
-                                    <Form.Item label="Commits">
-                                        <InputNumber
-                                            placeholder="1"
-                                            min="0"
-                                        />
-                                    </Form.Item>
-                                </Col>
-                                <Col lg={8}>
-                                    <Form.Item label="Language">
-                                        <Input
-                                            placeholder="Java"
-                                        />
-                                    </Form.Item>
-                                </Col>
-                                <Col lg={8}>
-                                    <Form.Item label="Score">
-                                        <InputNumber
-                                            placeholder="999"
-                                            min="0"
-                                        />
-                                    </Form.Item>
-                                </Col>
-                                <Col lg={8}>
-                                    <Form.Item label="Subscribers">
-                                        <InputNumber
-                                            placeholder="1"
-                                            min="0"
-                                        />
-                                    </Form.Item>
-                                </Col>
-                            </Form>
-                        </Row>
-                        <Row type="flex" justify="end">
-                            <Button type="primary">Buscar</Button>
-                        </Row>
-                    </Card>
+                    </RepositoryFilterForm>
                 </Row>
                 <Row>
                     <RepositoriosTable
-                        repositorios={this.state.repositorios}
+                        repositories={this.state.repositories}
+                        rowSelection={rowSelection}
                     >
                     </RepositoriosTable>
+                </Row>
+                <Row type="flex" justify="end" style={{ marginTop: 10 }}>
+                    <Col>
+                        <Button type="primary" size={10} onClick={this.addToFavourites}>
+                            Add to favorites
+                    </Button>
+                    </Col>
                 </Row>
             </Row>
         );

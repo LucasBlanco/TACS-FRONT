@@ -21,7 +21,12 @@ export default class Usuarios extends Component {
             hide()
             console.log(_users)
             const users = _users.map(user => {
-                return { ...user, admin: user.admin.toString(), key: user.id }
+                return {
+                    ...user,
+                    admin: user.admin.toString(),
+                    key: user.id,
+                    languages: user.languages.join(', ')
+                }
             })
             this.setState({ users })
         })
@@ -66,6 +71,16 @@ export default class Usuarios extends Component {
                 title: 'Admin',
                 dataIndex: 'admin',
                 key: 'admin',
+            },
+            {
+                title: 'Favourites',
+                dataIndex: 'nofFavourites',
+                key: 'nofFavourites',
+            },
+            {
+                title: 'Last login data',
+                dataIndex: 'lastLoginDate',
+                key: 'lastLoginDate',
             }
 
         ];

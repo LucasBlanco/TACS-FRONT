@@ -1,7 +1,7 @@
 import React from 'react'
 import { Table } from 'antd'
 
-export const RepositoriosTable = ({ repositorios }) => {
+export const RepositoriosTable = ({ repositories, rowSelection }) => {
 
 
     const columns = [
@@ -14,9 +14,34 @@ export const RepositoriosTable = ({ repositorios }) => {
             title: 'Owner',
             dataIndex: 'owner',
             key: 'owner',
+        },
+        {
+            title: 'Forks',
+            dataIndex: 'forks',
+            key: 'forks',
+        },
+        {
+            title: 'Issues',
+            dataIndex: 'issues',
+            key: 'issues',
+        },
+        {
+            title: 'Stars',
+            dataIndex: 'stars',
+            key: 'stars',
+        },
+        {
+            title: 'Language',
+            dataIndex: 'language',
+            key: 'language',
+        },
+        {
+            title: 'Nro Favorites',
+            dataIndex: 'favs',
+            key: 'favs',
         }
     ];
     return (
-        <Table dataSource={repositorios} columns={columns} />
+        <Table dataSource={repositories} columns={columns} rowSelection={rowSelection} />
     )
 }

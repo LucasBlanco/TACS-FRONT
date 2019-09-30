@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Table, Row, Col, Button } from 'antd';
-import { getOwnFavorites, deleteFavourite } from '../../services/favorites';
+import { getOwnFavorites, deleteFavourite } from '../../services/favorites-service';
 
 export default class Favoritos extends Component {
 
@@ -98,7 +98,7 @@ export default class Favoritos extends Component {
                 <Table dataSource={this.state.favorites} columns={columns} rowSelection={rowSelection} />
                 <Row type="flex" justify="end">
                     <Col>
-                        <Button type="danger" size={10} onClick={this.deleteSelectedFavorites}>
+                        <Button type="danger" onClick={this.deleteSelectedFavorites}>
                             Delete
                     </Button>
                     </Col>
