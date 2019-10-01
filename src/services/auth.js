@@ -2,14 +2,17 @@ class Auth {
 
     constructor() {
         this.autenticated = false
+        this.isAdmin = false
     }
 
-    login(userId, token, callback) {
+    login(userId, token, admin, callback) {
         this.autenticated = true
         this.userId = userId
         this.token = token
+        this.isAdmin = admin
         callback && callback()
     }
+
 
     logout(callback) {
         this.autenticated = false
