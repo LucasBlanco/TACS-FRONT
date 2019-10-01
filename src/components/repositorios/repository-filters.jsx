@@ -16,19 +16,32 @@ export default class RepositoryFilterForm extends Component {
         }
     }
 
-    handleSubmit = () => {
+    generateFilters = () => {
         const repositoryFilters = new RepositoryFilters([
             this.state.languageFilter,
             this.state.sizeFilter,
             this.state.starsFilter,
             this.state.forksFilter
         ])
+        return repositoryFilters
+    }
 
+    getRepos = () => {
+        const repositoryFilters = this.generateFilters()
         if (!repositoryFilters.hasFilters()) {
             message.error("Ingrese al menos un filtro")
             return
         }
-        this.props.handleSubmit(repositoryFilters)
+        this.props.getRepos(repositoryFilters)
+    }
+
+    getNextRepos = () => {
+        const repositoryFilters = this.generateFilters()
+        if (!repositoryFilters.hasFilters()) {
+            message.error("Ingrese al menos un filtro")
+            return
+        }
+        this.props.getNextRepos(repositoryFilters)
     }
 
     changeLanguageFilter = (language) => this.setState({ languageFilter: new LanguageFilter(language) })
@@ -124,7 +137,10 @@ export default class RepositoryFilterForm extends Component {
                     </Form>
                 </Row>
                 <Row type="flex" justify="end">
-                    <Button type="primary" onClick={this.handleSubmit}>Search</Button>
+                    <Button type="primary" onClick={this.getRepos}>Search</Button>
+                    <Button type="primary" size={10} onClick={this.getNextRepos} disabled={!this.props.nextPage}>
+                        Next
+                        </Button>
                 </Row>
             </Card>
         )

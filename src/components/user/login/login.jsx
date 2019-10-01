@@ -13,8 +13,8 @@ class Login extends Component {
         const hide = message.loading('Action in progress..', 0);
         authService.login({ username, password }).then((loginInfo) => {
             hide()
-            const { userId, token } = loginInfo
-            auth.login(userId, token, () => {
+            const { userId, token, admin } = loginInfo
+            auth.login(userId, token, admin, () => {
                 this.props.history.push("/app")
             })
         }).catch(error => {

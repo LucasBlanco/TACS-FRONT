@@ -9,7 +9,7 @@ import Estadisticas from '../estadisticas/estadisticas';
 import Usuarios from '../usuarios/usuarios';
 import Landing from '../landing/landing';
 import authService from '../../services/auth-service'
-
+import auth from '../../services/auth'
 const { Header, Content, Sider } = Layout;
 
 class MainLayout extends Component {
@@ -39,16 +39,18 @@ class MainLayout extends Component {
                                 <span className="nav-text">Favourites</span>
                             </Link>
                         </Menu.Item>
-                        <Menu.Item key="3">
+
+                        <Menu.Item key="3" style={!auth.isAdmin ? { display: 'none' } : {}}>
                             <Link to="/app/usuarios">
                                 <span className="nav-text">Users</span>
                             </Link>
                         </Menu.Item>
-                        <Menu.Item key="5">
+                        <Menu.Item key="5" style={!auth.isAdmin ? { display: 'none' } : {}}>
                             <Link to="/app/estadisticas">
                                 <span className="nav-text">Stats</span>
                             </Link>
                         </Menu.Item>
+
                         <Menu.Item key="6">
                             <Link to="/" onClick={() => authService.logout()}>
                                 <span className="nav-text">Log out</span>
