@@ -2,52 +2,69 @@ import React from "react";
 import "antd/dist/antd.css";
 import "./index.css";
 import { Form, Row, Col, Button, Input, message, DatePicker } from "antd";
-import { RepositoriosTable } from "../repositorios/repositorios-table";
+import { RepositoriosTable } from "./repositorios-table";
 import { getAllFavourites, getFavouriteByName } from '../../services/favorites-service';
 const { RangePicker } = DatePicker;
 class Estadisticas extends React.Component {
     state = {
         repositories: [],
-        totalAmount: 0
+        totalAmount: 0,
+        pagination: {}
     };
 
     handleSearch = (event) => {
         this.props.form.validateFields((err, values) => {
             console.log(err)
             if (!err) {
-                const hide = message.loading('Action in progress..', 0);
-                const { name, range } = values
-                if (!name) {
-                    const since = range[0].format('YYYY-MM-DD')
-                    const to = range[1].format('YYYY-MM-DD')
-                    getAllFavourites(0, 10, since, to).then(({ totalAmount, repositories }) => {
-                        hide()
-                        const favorites = repositories.map(repo => {
-                            return { ...repo, key: repo.id }
-                        })
-                        this.setState({ repositories: favorites, totalAmount })
-                    }).catch(error => {
-                        hide()
-                        message.error(error.response.data);
-                    })
-                } else {
-                    getFavouriteByName(name).then(repo => {
-                        hide()
-                        this.setState({ repositories: [{ ...repo, key: repo.id }], totalAmount: 1 })
-                    }).catch(error => {
-                        hide()
-                        message.error(error.response.data);
-                    })
-                }
-
+                this.getRepos(values)
             }
         });
         event.preventDefault();
     };
 
+    getRepos = ({ name, range, start = 0, limit = 10 }) => {
+        const hide = message.loading('Action in progress..', 0);
+        if (!name) {
+            const since = range[0].format('YYYY-MM-DD')
+            const to = range[1].format('YYYY-MM-DD')
+            getAllFavourites(start, limit, since, to).then(({ totalAmount, repositories }) => {
+                hide()
+                const favorites = repositories.map(repo => {
+                    return { ...repo, key: repo.id }
+                })
+                this.setState({ repositories: favorites, totalAmount, pagination: { total: totalAmount } })
+            }).catch(error => {
+                hide()
+                message.error(error.response.data);
+            })
+        } else {
+            getFavouriteByName(name).then(repo => {
+                hide()
+                this.setState({ repositories: [{ ...repo, key: repo.id }], totalAmount: 1 })
+            }).catch(error => {
+                hide()
+                message.error(error.response.data);
+            })
+        }
+    }
+
     handleReset = () => {
         this.setState({ repositories: [] })
         this.props.form.resetFields(['name', 'range'])
+    };
+
+    handleTableChange = (pagination, filters, sorter) => {
+        const pager = { ...this.state.pagination };
+        pager.current = pagination.current;
+        this.setState({
+            pagination: pager,
+        });
+        this.getRepos({
+            name: this.props.form.getFieldValue('name'),
+            range: this.props.form.getFieldValue('range'),
+            start: (pagination.current - 1) * 10,
+            limit: (pagination.current - 1) * 10 + 10
+        });
     };
 
 
@@ -105,7 +122,12 @@ class Estadisticas extends React.Component {
                     <h3> Total amount: {this.state.totalAmount}</h3>
                 </Row>
                 <Row>
-                    <RepositoriosTable repositories={this.state.repositories} />
+                    <RepositoriosTable
+                        repositories={this.state.repositories}
+                        pagination={this.state.pagination}
+                        onChange={this.handleTableChange}
+                        handleTableChange={this.handleTableChange}
+                    />
                 </Row>
             </Form>
         );

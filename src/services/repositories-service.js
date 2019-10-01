@@ -4,8 +4,9 @@ import auth from './auth'
 import { Repository } from '../models/repository';
 
 
-export const getRepositories = (repositoryFilter) => {
-    const queryFilter = repositoryFilter.getQueryFilter()
+export const getRepositories = ({ repositoryFilter, nextPage }) => {
+    let queryFilter = repositoryFilter.getQueryFilter()
+    queryFilter = nextPage ? queryFilter + "&lastId=" + nextPage : queryFilter
     const headers = { Authorization: auth.token }
     return get(serverRoute + `/repositories/search?${queryFilter}`, { headers: headers })
         .then(response => {

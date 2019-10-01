@@ -11,16 +11,29 @@ class Repositorios extends Component {
         super(props);
         this.state = {
             repositories: [],
+            nextPage: null,
             selectedIds: []
         }
     }
 
-    handleSubmit = (repositoryFilters) => {
+    /*getRepos = (repositoryFilter) => {
         const hide = message.loading('Action in progress..', 0);
-        getRepositories(repositoryFilters)
+        getRepositories({ repositoryFilter })
             .then(({ nextPage, repositories }) => {
                 hide()
-                this.setState({ repositories: repositories.map(repo => ({ ...repo, key: repo.id })) })
+                this.setState({ repositories: repositories.map(repo => ({ ...repo, key: repo.id })), nextPage })
+            }).catch(error => {
+                hide()
+                error.response && message.error(error.response.data);
+            })
+    }*/
+
+    getRepos = ({ repositoryFilter, nextPage }) => {
+        const hide = message.loading('Action in progress..', 0);
+        getRepositories({ repositoryFilter, nextPage })
+            .then(({ nextPage, repositories }) => {
+                hide()
+                this.setState({ repositories: repositories.map(repo => ({ ...repo, key: repo.id })), nextPage })
             }).catch(error => {
                 hide()
                 error.response && message.error(error.response.data);
@@ -55,8 +68,10 @@ class Repositorios extends Component {
         return (
             <Row>
                 <Row style={{ paddingBottom: 20 }}>
-                    <RepositoryFilterForm handleSubmit={this.handleSubmit}>
-
+                    <RepositoryFilterForm
+                        getRepos={(filters) => this.getRepos({ repositoryFilter: filters })}
+                        getNextRepos={(filters) => this.getRepos({ repositoryFilter: filters, nextPage: this.state.nextPage })}
+                        nextPage={this.state.nextPage}>
                     </RepositoryFilterForm>
                 </Row>
                 <Row>
@@ -66,12 +81,13 @@ class Repositorios extends Component {
                     >
                     </RepositoriosTable>
                 </Row>
-                <Row type="flex" justify="end" style={{ marginTop: 10 }}>
-                    <Col>
+                <Row style={{ marginTop: 10 }}>
+                    <Col span={12}>
                         <Button type="primary" size={10} onClick={this.addToFavourites}>
                             Add to favorites
-                    </Button>
+                        </Button>
                     </Col>
+
                 </Row>
             </Row>
         );
