@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Table, Row, Col, Button, Modal, List, message } from 'antd';
+import { Table, Row, Col, Button, Modal, List, message, Input, Icon } from 'antd';
 import { getUsers, compare } from '../../services/user-service';
-
+import Highlighter from 'react-highlight-words';
 export default class Usuarios extends Component {
 
 
@@ -14,7 +14,8 @@ export default class Usuarios extends Component {
                 repositories: [],
                 languages: []
             },
-            showComparison: false
+            showComparison: false,
+            searchText: ''
         }
         const hide = message.loading('Action in progress..', 0);
         getUsers().then(_users => {
@@ -44,8 +45,68 @@ export default class Usuarios extends Component {
 
     hideModal = () => this.setState({ showComparison: false })
 
+    getColumnSearchProps = dataIndex => ({
+        filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+            <div style={{ padding: 8 }}>
+                <Input
+                    ref={node => {
+                        this.searchInput = node;
+                    }}
+                    placeholder={`Search ${dataIndex}`}
+                    value={selectedKeys[0]}
+                    onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                    onPressEnter={() => this.handleSearch(selectedKeys, confirm)}
+                    style={{ width: 188, marginBottom: 8, display: 'block' }}
+                />
+                <Button
+                    type="primary"
+                    onClick={() => this.handleSearch(selectedKeys, confirm)}
+                    icon="search"
+                    size="small"
+                    style={{ width: 90, marginRight: 8 }}
+                >
+                    Search
+        </Button>
+                <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
+                    Reset
+        </Button>
+            </div>
+        ),
+        filterIcon: filtered => (
+            <Icon type="search" style={{ color: filtered ? '#1890ff' : undefined }} />
+        ),
+        onFilter: (value, record) =>
+            record[dataIndex]
+                .toString()
+                .toLowerCase()
+                .includes(value.toLowerCase()),
+        onFilterDropdownVisibleChange: visible => {
+            if (visible) {
+                setTimeout(() => this.searchInput.select());
+            }
+        },
+        render: text => (
+            <Highlighter
+                highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                searchWords={[this.state.searchText]}
+                autoEscape
+                textToHighlight={text.toString()}
+            />
+        ),
+    });
+
+    handleSearch = (selectedKeys, confirm) => {
+        confirm();
+        this.setState({ searchText: selectedKeys[0] });
+    };
+
+    handleReset = clearFilters => {
+        clearFilters();
+        this.setState({ searchText: '' });
+    };
 
     render() {
+
 
 
         const rowSelection = {
@@ -66,6 +127,7 @@ export default class Usuarios extends Component {
                 title: 'User name',
                 dataIndex: 'username',
                 key: 'username',
+                ...this.getColumnSearchProps('username')
             },
             {
                 title: 'Admin',
