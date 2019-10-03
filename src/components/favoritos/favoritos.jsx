@@ -152,6 +152,11 @@ export default class Favoritos extends Component {
                 dataIndex: 'forks',
                 key: 'forks',
             },
+            {
+                title: 'Size (KB)',
+                dataIndex: 'size',
+                key: 'size',
+            },
 
         ];
         return (

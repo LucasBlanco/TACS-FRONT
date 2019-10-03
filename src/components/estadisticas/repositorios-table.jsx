@@ -38,6 +38,11 @@ export const RepositoriosTable = ({ repositories, pagination, handleTableChange 
             title: 'Nro Favorites',
             dataIndex: 'favs',
             key: 'favs',
+        },
+        {
+            title: 'Size (KB)',
+            dataIndex: 'size',
+            key: 'size',
         }
     ];
     return (

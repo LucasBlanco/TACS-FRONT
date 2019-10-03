@@ -12,7 +12,8 @@ export class Repository {
             language,
             issues,
             source,
-            forks
+            forks,
+            size
         }
     ) {
         this.id = id
@@ -26,6 +27,7 @@ export class Repository {
         this.issues = issues
         this.source = source
         this.forks = forks
+        this.size = size
     }
 
 }

@@ -138,9 +138,6 @@ export default class RepositoryFilterForm extends Component {
                 </Row>
                 <Row type="flex" justify="end">
                     <Button type="primary" onClick={this.getRepos}>Search</Button>
-                    <Button type="primary" size={10} onClick={this.getNextRepos} disabled={!this.props.nextPage}>
-                        Next
-                        </Button>
                 </Row>
             </Card>
         )

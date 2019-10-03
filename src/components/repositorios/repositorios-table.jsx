@@ -39,6 +39,11 @@ export const RepositoriosTable = ({ repositories, rowSelection }) => {
             title: 'Nro Favorites',
             dataIndex: 'favs',
             key: 'favs',
+        },
+        {
+            title: 'Size (KB)',
+            dataIndex: 'size',
+            key: 'size',
         }
     ];
     return (
