@@ -143,11 +143,6 @@ export default class Favoritos extends Component {
                 key: 'issues',
             },
             {
-                title: 'Source',
-                dataIndex: 'source',
-                key: 'source',
-            },
-            {
                 title: 'Number Of Forks',
                 dataIndex: 'forks',
                 key: 'forks',
