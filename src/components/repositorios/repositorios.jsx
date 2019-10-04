@@ -55,9 +55,7 @@ class Repositorios extends Component {
         this.setState({
             pagination: pager,
         });
-        if ((pagination.current - 1) % 3 === 0 && this.state.loaded <= pagination.current * 10) {
-            console.log("Next page:")
-            console.log(Math.ceil(pagination.current / 3))
+        if (this.state.loaded < pagination.current * 10) {
             this.getRepos({
                 repositoryFilter: this.state.filters,
                 nextPage: Math.ceil(pagination.current / 3)
