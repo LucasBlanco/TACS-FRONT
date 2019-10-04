@@ -28,7 +28,7 @@ class MainLayout extends Component {
                     }}
                 >
                     <div className="logo" />
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} style={{ marginTop: '3rem' }}>
+                    <Menu theme="dark" mode="inline" style={{ marginTop: '3rem' }}>
                         <Menu.Item key="1" >
                             <Link to="/app/repositorios">
                                 <span className="nav-text">Repositories</span>
