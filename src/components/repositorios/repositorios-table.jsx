@@ -1,7 +1,7 @@
 import React from 'react'
 import { Table } from 'antd'
 
-export const RepositoriosTable = ({ repositories, rowSelection }) => {
+export const RepositoriosTable = ({ repositories, rowSelection, pagination, handleTableChange }) => {
 
 
     const columns = [
@@ -47,6 +47,7 @@ export const RepositoriosTable = ({ repositories, rowSelection }) => {
         }
     ];
     return (
-        <Table dataSource={repositories} columns={columns} rowSelection={rowSelection} />
+        <Table dataSource={repositories} columns={columns} rowSelection={rowSelection} pagination={pagination}
+            onChange={handleTableChange} />
     )
 }

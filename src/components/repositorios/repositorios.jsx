@@ -12,7 +12,10 @@ class Repositorios extends Component {
         this.state = {
             repositories: [],
             nextPage: null,
-            selectedIds: []
+            selectedIds: [],
+            pagination: {},
+            filters: null,
+            loaded: 0
         }
     }
 
@@ -31,9 +34,10 @@ class Repositorios extends Component {
     getRepos = ({ repositoryFilter, nextPage }) => {
         const hide = message.loading('Action in progress..', 0);
         getRepositories({ repositoryFilter, nextPage })
-            .then(({ nextPage, repositories }) => {
+            .then(({ totalRepositories, repositories }) => {
                 hide()
-                this.setState({ repositories: repositories.map(repo => ({ ...repo, key: repo.id })), nextPage })
+                const newRepos = this.state.repositories.concat(repositories.map(repo => ({ ...repo, key: repo.id })))
+                this.setState({ repositories: newRepos, pagination: { total: totalRepositories }, loaded: this.state.loaded + 30 })
             }).catch(error => {
                 hide()
                 error.response && message.error(error.response.data);
@@ -57,6 +61,22 @@ class Repositorios extends Component {
 
     }
 
+    handleTableChange = (pagination, filters, sorter) => {
+        const pager = { ...this.state.pagination };
+        pager.current = pagination.current;
+        this.setState({
+            pagination: pager,
+        });
+        if (pagination.current % 3 === 0 && this.state.loaded <= pagination.current * 10) {
+            console.log("Next page:")
+            console.log(Math.ceil(pagination.current / 3) + 1)
+            this.getRepos({
+                repositoryFilter: this.state.filters,
+                nextPage: Math.ceil(pagination.current / 3) + 1
+            });
+        }
+    };
+
 
     render() {
         const rowSelection = {
@@ -69,7 +89,10 @@ class Repositorios extends Component {
             <Row>
                 <Row style={{ paddingBottom: 20 }}>
                     <RepositoryFilterForm
-                        getRepos={(filters) => this.getRepos({ repositoryFilter: filters })}
+                        getRepos={(filters) => {
+                            this.setState({ filters })
+                            this.getRepos({ repositoryFilter: filters })
+                        }}
                         getNextRepos={(filters) => this.getRepos({ repositoryFilter: filters, nextPage: this.state.nextPage })}
                         nextPage={this.state.nextPage}>
                     </RepositoryFilterForm>
@@ -78,6 +101,9 @@ class Repositorios extends Component {
                     <RepositoriosTable
                         repositories={this.state.repositories}
                         rowSelection={rowSelection}
+                        pagination={this.state.pagination}
+                        onChange={this.handleTableChange}
+                        handleTableChange={this.handleTableChange}
                     >
                     </RepositoriosTable>
                 </Row>
