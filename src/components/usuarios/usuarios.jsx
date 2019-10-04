@@ -143,6 +143,11 @@ export default class Usuarios extends Component {
                 title: 'Last login data',
                 dataIndex: 'lastLoginDate',
                 key: 'lastLoginDate',
+            },
+            {
+                title: 'Favourites languages',
+                dataIndex: 'languages',
+                key: 'languages',
             }
 
         ];
