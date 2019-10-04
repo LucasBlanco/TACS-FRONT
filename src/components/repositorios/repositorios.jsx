@@ -19,18 +19,6 @@ class Repositorios extends Component {
         }
     }
 
-    /*getRepos = (repositoryFilter) => {
-        const hide = message.loading('Action in progress..', 0);
-        getRepositories({ repositoryFilter })
-            .then(({ nextPage, repositories }) => {
-                hide()
-                this.setState({ repositories: repositories.map(repo => ({ ...repo, key: repo.id })), nextPage })
-            }).catch(error => {
-                hide()
-                error.response && message.error(error.response.data);
-            })
-    }*/
-
     getRepos = ({ repositoryFilter, nextPage }) => {
         const hide = message.loading('Action in progress..', 0);
         getRepositories({ repositoryFilter, nextPage })
@@ -67,12 +55,12 @@ class Repositorios extends Component {
         this.setState({
             pagination: pager,
         });
-        if (pagination.current % 3 === 0 && this.state.loaded <= pagination.current * 10) {
+        if ((pagination.current - 1) % 3 === 0 && this.state.loaded <= pagination.current * 10) {
             console.log("Next page:")
-            console.log(Math.ceil(pagination.current / 3) + 1)
+            console.log(Math.ceil(pagination.current / 3))
             this.getRepos({
                 repositoryFilter: this.state.filters,
-                nextPage: Math.ceil(pagination.current / 3) + 1
+                nextPage: Math.ceil(pagination.current / 3)
             });
         }
     };
