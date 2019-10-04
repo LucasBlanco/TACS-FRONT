@@ -25,8 +25,13 @@ class Estadisticas extends React.Component {
     getRepos = ({ name, range, start = 0, limit = 10 }) => {
         const hide = message.loading('Action in progress..', 0);
         if (!name) {
-            const since = range[0].format('YYYY-MM-DD')
-            const to = range[1].format('YYYY-MM-DD')
+            var since = null
+            var to = null
+            if (range != null) {
+                since = range[0].format('YYYY-MM-DD')
+                to = range[1].format('YYYY-MM-DD')
+            }
+
             getAllFavourites(start, limit, since, to).then(({ totalAmount, repositories }) => {
                 hide()
                 const favorites = repositories.map(repo => {
