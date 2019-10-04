@@ -24,8 +24,9 @@ class Repositorios extends Component {
         getRepositories({ repositoryFilter, nextPage })
             .then(({ totalRepositories, repositories }) => {
                 hide()
+                const totalRepos = totalRepositories > 1000 ? 1000 : totalRepositories
                 const newRepos = this.state.repositories.concat(repositories.map(repo => ({ ...repo, key: repo.id })))
-                this.setState({ repositories: newRepos, pagination: { total: totalRepositories }, loaded: this.state.loaded + 30 })
+                this.setState({ repositories: newRepos, pagination: { total: totalRepos }, loaded: this.state.loaded + 30 })
             }).catch(error => {
                 hide()
                 error.response && message.error(error.response.data);
