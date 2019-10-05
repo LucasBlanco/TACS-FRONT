@@ -47,7 +47,7 @@ export const RepositoriosTable = ({ repositories, rowSelection, pagination, hand
         }
     ];
     return (
-        <Table dataSource={repositories} columns={columns} rowSelection={rowSelection} pagination={pagination}
+        <Table dataSource={repositories} columns={columns} rowSelection={rowSelection} pagination={{...pagination, pageSize: 30}}
             onChange={handleTableChange} />
     )
 }

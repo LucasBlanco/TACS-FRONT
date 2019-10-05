@@ -56,12 +56,12 @@ class Repositorios extends Component {
         this.setState({
             pagination: pager,
         });
-        if (this.state.loaded < pagination.current * 10) {
+       // if (this.state.loaded < pagination.current * 10) {
             this.getRepos({
                 repositoryFilter: this.state.filters,
-                nextPage: Math.ceil(pagination.current / 3)
+                nextPage: pagination.current
             });
-        }
+        //}
     };
 
 
@@ -96,7 +96,7 @@ class Repositorios extends Component {
                 </Row>
                 <Row style={{ marginTop: 10 }}>
                     <Col span={12}>
-                        <Button type="primary" size={10} onClick={this.addToFavourites}>
+                        <Button type="primary"  onClick={this.addToFavourites}>
                             Add to favorites
                         </Button>
                     </Col>
