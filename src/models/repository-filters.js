@@ -23,7 +23,7 @@ export class ContainsWordFilter {
     getQueryFilter() {
         let queryFilters = []
         if (this.words) {
-            queryFilters.push('containsWordFilter.words=' + this.words)
+            queryFilters.push('containsWordFilter.words=' + this.words.replace(/' '/g, '+'))
         }
         return queryFilters
     }
