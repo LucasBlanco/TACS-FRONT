@@ -128,11 +128,6 @@ export default class Favoritos extends Component {
                 key: 'favs',
             },
             {
-                title: 'Total Commits',
-                dataIndex: 'totalCommits',
-                key: 'totalCommits',
-            },
-            {
                 title: 'Main Language',
                 dataIndex: 'language',
                 key: 'language',

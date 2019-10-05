@@ -8,7 +8,6 @@ export class Repository {
             stars,
             owner,
             favs,
-            totalCommits,
             language,
             issues,
             source,
@@ -22,7 +21,6 @@ export class Repository {
         this.stars = stars
         this.owner = owner
         this.favs = favs
-        this.totalCommits = totalCommits
         this.language = language
         this.issues = issues
         this.source = source
