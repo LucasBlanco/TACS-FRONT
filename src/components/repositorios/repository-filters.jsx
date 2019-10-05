@@ -146,7 +146,6 @@ export default class RepositoryFilterForm extends Component {
                                 />
                             </Form.Item>
                         </Col>
-
                     </Form>
                 </Row>
                 <Row type="flex" justify="end">
