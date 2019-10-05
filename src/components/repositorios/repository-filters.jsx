@@ -35,14 +35,6 @@ export default class RepositoryFilterForm extends Component {
         this.props.getRepos(repositoryFilters)
     }
 
-    getNextRepos = () => {
-        const repositoryFilters = this.generateFilters()
-        if (!repositoryFilters.hasFilters()) {
-            message.error("Ingrese al menos un filtro")
-            return
-        }
-        this.props.getNextRepos(repositoryFilters)
-    }
 
     changeLanguageFilter = (language) => this.setState({ languageFilter: new LanguageFilter(language) })
 
