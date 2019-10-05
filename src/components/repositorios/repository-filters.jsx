@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { RepositoryFilters, LanguageFilter, StarsFilter, SizeFilter, ForksFilter } from '../../models/repository-filters';
+import { RepositoryFilters, ContainsWordFilter, LanguageFilter, StarsFilter, SizeFilter, ForksFilter } from '../../models/repository-filters';
 import { message, Card, Row, Button, Input, Form, Col, Typography } from 'antd';
 
 const { Title } = Typography
@@ -9,6 +9,7 @@ export default class RepositoryFilterForm extends Component {
     constructor() {
         super()
         this.state = {
+            containsWordFilter: new ContainsWordFilter(null, null),
             languageFilter: new LanguageFilter(null),
             sizeFilter: new SizeFilter(null, null),
             starsFilter: new StarsFilter(null, null),
@@ -18,6 +19,7 @@ export default class RepositoryFilterForm extends Component {
 
     generateFilters = () => {
         const repositoryFilters = new RepositoryFilters([
+            this.state.containsWordFilter,
             this.state.languageFilter,
             this.state.sizeFilter,
             this.state.starsFilter,
@@ -36,6 +38,8 @@ export default class RepositoryFilterForm extends Component {
     }
 
 
+    changeContainsWordFilter = (words) => this.setState({ containsWordFilter: new ContainsWordFilter(words) })
+    
     changeLanguageFilter = (language) => this.setState({ languageFilter: new LanguageFilter(language) })
 
     changeSizeFilter = (min, max) => this.setState({ sizeFilter: new SizeFilter(min, max) })
@@ -125,7 +129,15 @@ export default class RepositoryFilterForm extends Component {
                                 />
                             </Form.Item>
                         </Col>
-
+                        <Col lg={8}>
+                            <Form.Item label="Words">
+                                <Input
+                                    placeholder="GitHub API"
+                                    value={this.state.containsWordFilter.words}
+                                    onChange={e => this.changeContainsWordFilter(e.target.value)}
+                                />
+                            </Form.Item>
+                        </Col>
                     </Form>
                 </Row>
                 <Row type="flex" justify="end">

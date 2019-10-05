@@ -16,6 +16,19 @@ export class RepositoryFilters {
     }
 }
 
+export class ContainsWordFilter {
+    constructor(words) {
+        this.words = words
+    }
+    getQueryFilter() {
+        let queryFilters = []
+        if (this.words) {
+            queryFilters.push('containsWordFilter.words=' + this.words.replace(/' '/g, '+'))
+        }
+        return queryFilters
+    }
+}
+
 export class LanguageFilter {
     constructor(language) {
         this.language = language
