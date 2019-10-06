@@ -24,7 +24,10 @@ class Repositorios extends Component {
             .then(({ totalRepositories, repositories }) => {
                 hide()
                 const totalRepos = totalRepositories > 1000 ? 1000 : totalRepositories
-                this.setState({ repositories, pagination: { total: totalRepos }})
+                const repos = repositories.map(repo => {
+                    return {...repo, key:repo.id}
+                })
+                this.setState({ repositories:repos, pagination: { total: totalRepos }})
             }).catch(error => {
                 hide()
                 error.response && message.error(error.response.data);
