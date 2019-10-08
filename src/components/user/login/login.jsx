@@ -19,7 +19,8 @@ class Login extends Component {
             })
         }).catch(error => {
             hide()
-            message.error(error.response.data);
+            error.responsee && message.error(error.response.data);
+            message.error('Incorrect username or password', 0);
         })
     }
     render() {
