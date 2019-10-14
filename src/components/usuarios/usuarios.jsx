@@ -157,7 +157,7 @@ export default class Usuarios extends Component {
                 <Table dataSource={this.state.users} columns={columns} rowSelection={rowSelection} />
                 <Row type="flex" justify="end">
                     <Col>
-                        <Button type="primary" size={10} onClick={() => this.getComparison()}>
+                        <Button type="primary" onClick={() => this.getComparison()}>
                             Comparar
                     </Button>
                     </Col>

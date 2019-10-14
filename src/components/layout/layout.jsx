@@ -29,12 +29,12 @@ class MainLayout extends Component {
                 >
                     <div className="logo" />
                     <Menu theme="dark" mode="inline" style={{ marginTop: '3rem' }}>
-                        <Menu.Item key="1" >
+                        <Menu.Item key="1" style={auth.isAdmin ? { display: 'none' } : {}}>
                             <Link to="/app/repositorios">
                                 <span className="nav-text">Repositories</span>
                             </Link>
                         </Menu.Item>
-                        <Menu.Item key="2" >
+                        <Menu.Item key="2" style={auth.isAdmin ? { display: 'none' } : {}} >
                             <Link to="/app/favoritos">
                                 <span className="nav-text">Favourites</span>
                             </Link>

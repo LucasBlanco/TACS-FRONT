@@ -25,9 +25,9 @@ class Repositorios extends Component {
                 hide()
                 const totalRepos = totalRepositories > 1000 ? 1000 : totalRepositories
                 const repos = repositories.map(repo => {
-                    return {...repo, key:repo.id}
+                    return { ...repo, key: repo.id }
                 })
-                this.setState({ repositories:repos, pagination: { total: totalRepos }})
+                this.setState({ repositories: repos, pagination: { total: totalRepos } })
             }).catch(error => {
                 hide()
                 error.response && message.error(error.response.data);
@@ -36,24 +36,35 @@ class Repositorios extends Component {
 
     addToFavourites = () => {
         const hide = message.loading('Action in progress..', 0);
-        this.state.selectedIds
-            .map(id => this.state.repositories.find(r => r.id === id))
-            .forEach(repo => {
-                addFavourite(repo)
-                    .then(() => {
-                        hide()
-                        message.success("The repository was added to your favourite's list");
-                    }).catch(error => {
-                        hide()
-                        error.response && message.error(error.response.data);
-                    })
-            })
+        const selectedRepos = this.state.selectedIds.map(id => this.state.repositories.find(r => r.id === id))
+        const promises = selectedRepos.map(repo => addFavourite(repo))
+        Promise.allSettled(promises).then(results => {
+            hide()
+            const resultsWithIndex = results.map((result, index) => ({ index, result }))
+            const rejecteds = resultsWithIndex.filter(r => r.result.status === 'rejected')
+            const fulfilleds = resultsWithIndex.filter(r => r.result.status === 'fulfilled')
+            if (rejecteds.length > 0) {
+                console.log(rejecteds)
+                message.error(
+                    rejecteds
+                        .map(({ index, result }) => selectedRepos[index].name + ': ' + result.reason.response.data)
+                        .join(', '), 5
+                )
+            }
+            if (fulfilleds.length > 0) {
+                message.success(
+                    fulfilleds
+                        .map(({ index, result }) => selectedRepos[index].name + ": Has been added to your favourite's list")
+                        .join(', '), 5
+                )
+            }
+        })
     }
 
     handleTableChange = (pagination, filters, sorter) => {
         const pager = { ...this.state.pagination };
         pager.current = pagination.current;
-        this.setState({pagination: pager});
+        this.setState({ pagination: pager });
         this.getRepos({
             repositoryFilter: this.state.filters,
             nextPage: pagination.current
@@ -72,7 +83,7 @@ class Repositorios extends Component {
                 <Row style={{ paddingBottom: 20 }}>
                     <RepositoryFilterForm
                         getRepos={(filters) => {
-                            this.setState({ filters, pagination: {...this.state.pagination, current: 1} })
+                            this.setState({ filters, pagination: { ...this.state.pagination, current: 1 } })
                             this.getRepos({ repositoryFilter: filters })
                         }}>
                     </RepositoryFilterForm>
@@ -89,7 +100,7 @@ class Repositorios extends Component {
                 </Row>
                 <Row style={{ marginTop: 10 }}>
                     <Col span={12}>
-                        <Button type="primary"  onClick={this.addToFavourites}>
+                        <Button type="primary" onClick={this.addToFavourites}>
                             Add to favorites
                         </Button>
                     </Col>

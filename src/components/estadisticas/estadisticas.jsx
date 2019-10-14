@@ -4,6 +4,7 @@ import "./index.css";
 import { Form, Row, Col, Button, Input, message, DatePicker } from "antd";
 import { RepositoriosTable } from "./repositorios-table";
 import { getAllFavourites, getFavouriteByName } from '../../services/favorites-service';
+import * as moment from 'moment'
 const { RangePicker } = DatePicker;
 class Estadisticas extends React.Component {
     state = {
@@ -72,11 +73,19 @@ class Estadisticas extends React.Component {
         });
     };
 
+    maxDate = (rule, value, callback) => {
+        if (value && value[1].isAfter(moment())) {
+            callback('The dates must be previuos to today');
+        } else {
+            callback();
+        }
+    };
+
 
     render() {
         const { getFieldDecorator } = this.props.form
         const decorators = {
-            range: getFieldDecorator('range', { rules: [] }),
+            range: getFieldDecorator('range', { rules: [this.maxDate] }),
             name: getFieldDecorator('name', { rules: [] })
         }
 

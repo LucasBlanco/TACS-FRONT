@@ -39,14 +39,36 @@ export default class RepositoryFilterForm extends Component {
 
 
     changeContainsWordFilter = (words) => this.setState({ containsWordFilter: new ContainsWordFilter(words) })
-    
+
     changeLanguageFilter = (language) => this.setState({ languageFilter: new LanguageFilter(language) })
 
-    changeSizeFilter = (min, max) => this.setState({ sizeFilter: new SizeFilter(min, max) })
+    minCeroInput = () => {
+        const hide = message.error('Values must be higher than cero', 0);
+        setTimeout(hide, 3000);
+    }
+    changeSizeFilter = (min, max) => {
+        if (min < 0 || max < 0) {
+            this.minCeroInput()
+        } else {
+            this.setState({ sizeFilter: new SizeFilter(min, max) })
+        }
+    }
 
-    changeStarsFilter = (min, max) => this.setState({ starsFilter: new StarsFilter(min, max) })
+    changeStarsFilter = (min, max) => {
+        if (min < 0 || max < 0) {
+            this.minCeroInput()
+        } else {
+            this.setState({ starsFilter: new StarsFilter(min, max) })
+        }
+    }
 
-    changeForksFilter = (min, max) => this.setState({ forksFilter: new ForksFilter(min, max) })
+    changeForksFilter = (min, max) => {
+        if (min < 0 || max < 0) {
+            this.minCeroInput()
+        } else {
+            this.setState({ forksFilter: new ForksFilter(min, max) })
+        }
+    }
 
     render() {
         const formItemLayout = {

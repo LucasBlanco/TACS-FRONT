@@ -52,10 +52,10 @@ export default class Favoritos extends Component {
                     style={{ width: 90, marginRight: 8 }}
                 >
                     Search
-        </Button>
+                </Button>
                 <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
                     Reset
-        </Button>
+                </Button>
             </div>
         ),
         filterIcon: filtered => (
