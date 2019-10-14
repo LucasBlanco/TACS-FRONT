@@ -54,6 +54,11 @@ class Estadisticas extends React.Component {
         }
     }
 
+    getReposAllTime = () => {
+        const range = [moment('1900-01-01', 'YYYY-MM-DD'), moment()]
+        this.getRepos({ range })
+    }
+
     handleReset = () => {
         this.setState({ repositories: [] })
         this.props.form.resetFields(['name', 'range'])
@@ -107,7 +112,6 @@ class Estadisticas extends React.Component {
                             {
                                 decorators.range(
                                     <RangePicker disabled={formHasName()} />
-
                                 )
                             }
                         </Form.Item>
@@ -123,7 +127,12 @@ class Estadisticas extends React.Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col span={24} style={{ textAlign: "right" }}>
+                    <Col span={12} style={{ textAlign: "left" }}>
+                        <Button type="primary" onClick={this.getReposAllTime}>
+                            All Favourites
+                        </Button>
+                    </Col>
+                    <Col span={12} style={{ textAlign: "right" }}>
                         <Button type="primary" htmlType="submit">
                             Search
                         </Button>
@@ -132,7 +141,7 @@ class Estadisticas extends React.Component {
                         </Button>
                     </Col>
                 </Row>
-                <Row>
+                <Row style={{ marginTop: '20px' }}>
                     <h3> Total amount: {this.state.totalAmount}</h3>
                 </Row>
                 <Row>
