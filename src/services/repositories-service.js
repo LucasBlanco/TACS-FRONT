@@ -10,7 +10,6 @@ export const getRepositories = ({ repositoryFilter, nextPage }) => {
     const headers = { Authorization: auth.token }
     return get(serverRoute + `/repositories/search?${queryFilter}`, { headers: headers })
         .then(response => {
-            console.log('Respueta', response.data)
             return response.data
         }).then(data => {
             return {

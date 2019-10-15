@@ -20,7 +20,6 @@ export default class Usuarios extends Component {
         const hide = message.loading('Action in progress..', 0);
         getUsers().then(_users => {
             hide()
-            console.log(_users)
             const users = _users.map(user => {
                 return {
                     ...user,
@@ -35,7 +34,6 @@ export default class Usuarios extends Component {
 
     getComparison = () => {
         const hide = message.loading('Action in progress..', 0);
-        console.log(this.state.selectedIds)
         const [id1, id2] = this.state.selectedIds
         compare(id1, id2).then(comparison => {
             hide()
@@ -118,7 +116,6 @@ export default class Usuarios extends Component {
                 } else {
                     this.setState({ selectedIds: selectedRowKeys })
                 }
-                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
             }
         };
 

@@ -44,7 +44,6 @@ class Repositorios extends Component {
             const rejecteds = resultsWithIndex.filter(r => r.result.status === 'rejected')
             const fulfilleds = resultsWithIndex.filter(r => r.result.status === 'fulfilled')
             if (rejecteds.length > 0) {
-                console.log(rejecteds)
                 message.error(
                     rejecteds
                         .map(({ index, result }) => selectedRepos[index].name + ': ' + result.reason.response.data)
