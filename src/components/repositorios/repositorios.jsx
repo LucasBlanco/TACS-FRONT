@@ -51,11 +51,12 @@ class Repositorios extends Component {
                 )
             }
             if (fulfilleds.length > 0) {
-                message.success(
+                /*message.success(
                     fulfilleds
                         .map(({ index, result }) => selectedRepos[index].name + ": Has been added to your favourite's list")
                         .join(', '), 5
-                )
+                )*/
+                message.success("The repositories had been added to your favourites")
             }
         })
     }
