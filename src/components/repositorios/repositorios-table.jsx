@@ -1,8 +1,9 @@
 import React from 'react'
 import { Table } from 'antd'
+import Contributors from './contributors';
+import { getContributors } from '../../services/repositories-service';
 
 export const RepositoriosTable = ({ repositories, rowSelection, pagination, handleTableChange }) => {
-
 
     const columns = [
         {
@@ -44,15 +45,26 @@ export const RepositoriosTable = ({ repositories, rowSelection, pagination, hand
             title: 'Size (KB)',
             dataIndex: 'size',
             key: 'size',
-        }
+        },
+        {
+            title: 'Contributors',
+            key: 'contributors',
+            render: (text, record) => (
+                <span>
+                    <Contributors
+                        state={{ repo: record }}
+                    />
+                </span>
+            ),
+        },
     ];
     return (
-        <Table 
-            dataSource={repositories} 
-            columns={columns} 
-            rowSelection={rowSelection} 
-            pagination={{...pagination, pageSize: 30}}
-            onChange={handleTableChange} 
+        <Table
+            dataSource={repositories}
+            columns={columns}
+            rowSelection={rowSelection}
+            pagination={{ ...pagination, pageSize: 30 }}
+            onChange={handleTableChange}
         />
     )
 }

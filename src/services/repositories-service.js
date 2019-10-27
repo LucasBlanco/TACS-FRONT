@@ -18,3 +18,11 @@ export const getRepositories = ({ repositoryFilter, nextPage }) => {
             }
         })
 }
+
+export const getContributors = (repository) => {
+    const headers = { Authorization: auth.token }
+    return get(serverRoute + "/contributors", { headers: headers }, { body: repository })
+        .then(response => {
+            return response.data
+        })
+}
