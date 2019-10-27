@@ -52,7 +52,8 @@ export const RepositoriosTable = ({ repositories, rowSelection, pagination, hand
             render: (text, record) => (
                 <span>
                     <Contributors
-                        state={{ repo: record }}
+                        repo={record}
+                        contributors={getContributors(record)}
                     />
                 </span>
             ),

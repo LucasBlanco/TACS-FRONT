@@ -5,12 +5,13 @@ import { getContributors } from '../../services/repositories-service';
 class Contributors extends Component {
 
     state = {
-        repo: null,
+        contributors: null,
         visible: false
     };
 
     showModal = () => {
-        console.log(this.state.repo)
+        console.log(this.props.repo)
+        console.log(this.props.contributors)
         this.setState({
             visible: true,
         });
@@ -18,7 +19,8 @@ class Contributors extends Component {
 
     handleOk = e => {
         console.log(e);
-        console.log(this.state.repo)
+        console.log(this.props.repo)
+        console.log(this.props.contributors)
         this.setState({
             visible: false,
         });

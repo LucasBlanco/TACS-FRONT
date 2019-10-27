@@ -21,7 +21,7 @@ export const getRepositories = ({ repositoryFilter, nextPage }) => {
 
 export const getContributors = (repository) => {
     const headers = { Authorization: auth.token }
-    return get(serverRoute + "/contributors", { headers: headers }, { body: repository })
+    return get(serverRoute + `/contributors?owner=${repository.owner}&reponame=${repository.name}`, { headers: headers })
         .then(response => {
             return response.data
         })
