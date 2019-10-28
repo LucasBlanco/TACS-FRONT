@@ -10,7 +10,7 @@ class Login extends Component {
     }
 
     handleSubmit = ({ username, password }) => {
-        const hide = message.loading('Action in progress..', 0);
+        message.loading('Action in progress..', 0);
         authService.login({ username, password }).then((loginInfo) => {
             message.destroy()
             const { userId, token, admin } = loginInfo
@@ -21,7 +21,6 @@ class Login extends Component {
             message.destroy()
             //error.responsee && message.error(error.response.data);
             message.error('Incorrect username or password', 0);
-
         })
     }
     render() {
