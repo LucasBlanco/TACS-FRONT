@@ -1,7 +1,6 @@
 import React from 'react'
 import { Table } from 'antd'
 import Contributors from './contributors';
-import { getContributors } from '../../services/repositories-service';
 
 export const RepositoriosTable = ({ repositories, rowSelection, pagination, handleTableChange }) => {
 
@@ -53,7 +52,6 @@ export const RepositoriosTable = ({ repositories, rowSelection, pagination, hand
                 <span>
                     <Contributors
                         repo={record}
-                        contributors={getContributors(record)}
                     />
                 </span>
             ),

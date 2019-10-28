@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Modal } from 'antd'
+import { Button, Modal, List } from 'antd'
 import { getContributors } from '../../services/repositories-service';
 
 class Contributors extends Component {
@@ -9,41 +9,57 @@ class Contributors extends Component {
         visible: false
     };
 
+    constructor(props) {
+        super(props)
+
+        getContributors(this.props.repo).then(contributors =>
+            this.setState({
+                contributors: contributors
+            })
+        )
+    }
+
     showModal = () => {
-        console.log(this.props.repo)
-        console.log(this.props.contributors)
         this.setState({
-            visible: true,
+            visible: true
+        });
+    };
+
+    handleCancel = e => {
+        this.setState({
+            visible: false,
         });
     };
 
     handleOk = e => {
-        console.log(e);
-        console.log(this.props.repo)
-        console.log(this.props.contributors)
         this.setState({
             visible: false,
         });
     };
 
     render() {
+
         return (
             <div>
                 <Button type="link" onClick={() => this.setState({ visible: true })}>
                     Get Contributors
                     </Button>
                 <Modal
-                    title="Contributors"
+                    title="Top 30 Contributors"
                     visible={this.state.visible}
+                    onCancel={this.handleCancel}
                     footer={[
                         <Button key="Ok" onClick={this.handleOk}>
                             Ok
                         </Button>
                     ]}
                 >
-                    <p>{this.state.repo}</p>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
+                    <List
+                        size="small"
+                        bordered
+                        dataSource={this.state.contributors}
+                        renderItem={item => <List.Item>{item.username} made {item.contributions} contributions </List.Item>}
+                    />
                 </Modal>
             </div>
         );
