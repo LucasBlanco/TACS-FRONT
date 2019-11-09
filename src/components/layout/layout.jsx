@@ -39,13 +39,13 @@ class MainLayout extends Component {
                                 <span className="nav-text">Favourites</span>
                             </Link>
                         </Menu.Item>
-                        <Menu.Item key="2"  >
+                        <Menu.Item key="3"  >
                             <Link to="/app/gitignoreTemplates">
-                                <span className="nav-text">Git ignore templates</span>
+                                <span className="nav-text" style={auth.isAdmin ? {display: 'none'} : {}}>Git ignore templates</span>
                             </Link>
                         </Menu.Item>
 
-                        <Menu.Item key="3" style={!auth.isAdmin ? {display: 'none'} : {}}>
+                        <Menu.Item key="4" style={!auth.isAdmin ? {display: 'none'} : {}}>
                             <Link to="/app/usuarios">
                                 <span className="nav-text">Users</span>
                             </Link>
