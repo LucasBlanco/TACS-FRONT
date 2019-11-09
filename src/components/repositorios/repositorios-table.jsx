@@ -1,6 +1,7 @@
 import React from 'react'
 import { Table } from 'antd'
 import Contributors from './contributors';
+import Tags from './tags';
 
 export const RepositoriosTable = ({ repositories, rowSelection, pagination, handleTableChange }) => {
 
@@ -51,6 +52,17 @@ export const RepositoriosTable = ({ repositories, rowSelection, pagination, hand
             render: (text, record) => (
                 <span>
                     <Contributors
+                        repo={record}
+                    />
+                </span>
+            ),
+        },
+        {
+            title: 'Tags',
+            key: 'tags',
+            render: (text, record) => (
+                <span>
+                    <Tags
                         repo={record}
                     />
                 </span>
