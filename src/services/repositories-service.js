@@ -1,6 +1,7 @@
 import { get } from 'axios';
 
 import { Contributor } from '../models/contributor';
+import { Commit } from '../models/commit';
 import { GitIgnoreTemplate } from '../models/gitIgnoreTemplate';
 import { Repository } from '../models/repository';
 import auth from './auth';
@@ -42,3 +43,10 @@ export const getContributors = (repository) => {
         })
 }
 
+export const getCommits = (repository) => {
+    const headers = { Authorization: auth.token }
+    return get(serverRoute + `/commits?owner=${repository.owner}&reponame=${repository.name}`, { headers: headers })
+        .then(response => {
+            return response.data.commits.map(commit => new Commit(commit))
+        })
+}

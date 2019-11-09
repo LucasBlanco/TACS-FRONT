@@ -1,6 +1,7 @@
 import React from 'react'
 import { Table } from 'antd'
 import Contributors from './contributors';
+import Commits from './commits';
 
 export const RepositoriosTable = ({ repositories, rowSelection, pagination, handleTableChange }) => {
 
@@ -56,6 +57,17 @@ export const RepositoriosTable = ({ repositories, rowSelection, pagination, hand
                 </span>
             ),
         },
+        {
+            title: 'Commits',
+            key: 'commits',
+            render: (text, record) => (
+                <span>
+                    <Commits
+                        repo={record}
+                    />
+                </span>
+            ),
+        },
     ];
     return (
         <Table
@@ -64,6 +76,11 @@ export const RepositoriosTable = ({ repositories, rowSelection, pagination, hand
             rowSelection={rowSelection}
             pagination={{ ...pagination, pageSize: 30 }}
             onChange={handleTableChange}
+            scroll={{
+                x: true,
+                y: false,
+                scrollToFirstRowOnChange: true
+            }}
         />
     )
 }
