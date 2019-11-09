@@ -44,7 +44,6 @@ class Repositorios extends Component {
             const rejecteds = resultsWithIndex.filter(r => r.result.status === 'rejected')
             const fulfilleds = resultsWithIndex.filter(r => r.result.status === 'fulfilled')
             if (rejecteds.length > 0) {
-                console.log(rejecteds)
                 message.error(
                     rejecteds
                         .map(({ index, result }) => selectedRepos[index].name + ': ' + result.reason.response.data)
@@ -52,11 +51,12 @@ class Repositorios extends Component {
                 )
             }
             if (fulfilleds.length > 0) {
-                message.success(
+                /*message.success(
                     fulfilleds
                         .map(({ index, result }) => selectedRepos[index].name + ": Has been added to your favourite's list")
                         .join(', '), 5
-                )
+                )*/
+                message.success("The repositories had been added to your favourites")
             }
         })
     }

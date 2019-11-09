@@ -15,7 +15,6 @@ class Estadisticas extends React.Component {
 
     handleSearch = (event) => {
         this.props.form.validateFields((err, values) => {
-            console.log(err)
             if (!err) {
                 this.getRepos(values)
             }

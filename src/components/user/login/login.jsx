@@ -10,16 +10,16 @@ class Login extends Component {
     }
 
     handleSubmit = ({ username, password }) => {
-        const hide = message.loading('Action in progress..', 0);
+        message.loading('Action in progress..', 0);
         authService.login({ username, password }).then((loginInfo) => {
-            hide()
+            message.destroy()
             const { userId, token, admin } = loginInfo
             auth.login(userId, token, admin, () => {
                 this.props.history.push("/app")
             })
         }).catch(error => {
-            hide()
-            error.responsee && message.error(error.response.data);
+            message.destroy()
+            //error.responsee && message.error(error.response.data);
             message.error('Incorrect username or password', 0);
         })
     }

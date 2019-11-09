@@ -20,7 +20,6 @@ export const compare = (idUser1, idUser2) => {
     const headers = { Authorization: auth.token }
     return get(serverRoute + `/comparison/favourites?id1=${idUser1}&id2=${idUser2}`, { headers: headers })
         .then(response => {
-            console.log('Respueta', response.data)
             return response.data
         })
         .then(data => ({
