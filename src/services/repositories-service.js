@@ -1,14 +1,16 @@
-import { post, get } from 'axios'
-import serverRoute from './server-route'
-import auth from './auth'
+import { get } from 'axios';
+
+import { GitIgnoreTemplate } from '../models/gitIgnoreTemplate';
 import { Repository } from '../models/repository';
+import auth from './auth';
+import serverRoute from './server-route';
 
 
-export const getRepositories = ({ repositoryFilter, nextPage }) => {
+export const getRepositories = ({repositoryFilter, nextPage}) => {
     let queryFilter = repositoryFilter.getQueryFilter()
     queryFilter = nextPage ? queryFilter + "&page=" + nextPage : queryFilter
-    const headers = { Authorization: auth.token }
-    return get(serverRoute + `/repositories/search?${queryFilter}`, { headers: headers })
+    const headers = {Authorization: auth.token}
+    return get(serverRoute + `/repositories/search?${queryFilter}`, {headers: headers})
         .then(response => {
             console.log('Respueta', response.data)
             return response.data
@@ -18,4 +20,14 @@ export const getRepositories = ({ repositoryFilter, nextPage }) => {
                 repositories: data.repositories.map(repo => new Repository(repo))
             }
         })
+}
+
+export const getGitIgnoreTemplates = () => {
+    const headers = {Authorization: auth.token}
+    return get(serverRoute + '/gitIgnoreTemplates', {'headers': headers})
+        .then(response => {
+            console.log('git ignore templates', response.data)
+            return response.data.templates
+        })
+        .then(templates => templates.map(temp => new GitIgnoreTemplate(temp.name, temp.downloadUrl)))
 }
