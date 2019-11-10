@@ -43,9 +43,9 @@ class Commits extends Component {
             <div>
                 <Button type="link" onClick={() => this.setState({ visible: true })}>
                     Commits
-                    </Button>
+                </Button>
                 <Modal
-                    title="Last 30 Commits"
+                    title="Last 30 Commits Descriptions"
                     visible={this.state.visible}
                     onCancel={this.handleCancel}
                     footer={[
@@ -55,7 +55,7 @@ class Commits extends Component {
                     ]}
                 >
                     <List
-                        size="small"
+                        size="large"
                         bordered
                         dataSource={this.state.commits}
                         renderItem={item => <List.Item>{item.message}</List.Item>}
