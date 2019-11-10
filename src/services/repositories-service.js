@@ -1,5 +1,5 @@
 import { get } from 'axios';
-
+import { post } from 'axios';
 import { Contributor } from '../models/contributor';
 import { Commit } from '../models/commit';
 import { GitIgnoreTemplate } from '../models/gitIgnoreTemplate';
@@ -49,4 +49,11 @@ export const getCommits = (repository) => {
         .then(response => {
             return response.data.commits.map(commit => new Commit(commit))
         })
+}
+
+export const createRepository = (repo) => {
+    const headers = { Authorization: auth.token }
+    console.log(serverRoute + "/repositories/")
+    console.log(repo)
+    return post(serverRoute + "/repositories/", repo, { headers: headers })
 }

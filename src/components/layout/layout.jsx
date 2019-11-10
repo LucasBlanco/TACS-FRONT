@@ -10,6 +10,7 @@ import GitIgnoreTemplates from '../gitignoreTemplates/gitignoreTemplates';
 import Landing from '../landing/landing';
 import Repositorios from '../repositorios/repositorios';
 import Usuarios from '../usuarios/usuarios';
+import NewRepositoryForm from '../repositorios/new-repository';
 
 
 const {Header, Content, Sider} = Layout;
@@ -56,7 +57,13 @@ class MainLayout extends Component {
                             </Link>
                         </Menu.Item>
 
-                        <Menu.Item key="6">
+                        <Menu.Item key="6"  >
+                            <Link to="/app/newRepository">
+                                <span className="nav-text" style={!auth.isAdmin ? {display: 'none'} : {}}>Create repository</span>
+                            </Link>
+                        </Menu.Item>
+
+                        <Menu.Item key="7">
                             <Link to="/" onClick={() => authService.logout()}>
                                 <span className="nav-text">Log out</span>
                             </Link>
@@ -72,6 +79,7 @@ class MainLayout extends Component {
                             <Route path="/app/estadisticas" component={Estadisticas}></Route>
                             <Route path="/app/usuarios" component={Usuarios}></Route>
                             <Route path="/app/gitignoreTemplates" component={GitIgnoreTemplates}></Route>
+                            <Route path="/app/newRepository" component={NewRepositoryForm}></Route>
                             <Route exact path="/app" component={Landing}></Route>
                         </Card>
                     </Content>
