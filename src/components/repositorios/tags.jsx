@@ -45,6 +45,7 @@ class Tags extends Component {
                     Get Tags
                     </Button>
                 <Modal
+                    width='30%'
                     title="tagsss"
                     visible={this.state.visible}
                     onCancel={this.handleCancel}
@@ -55,10 +56,17 @@ class Tags extends Component {
                     ]}
                 >
                     <List
-                        size="small"
+                        size="medium"
                         bordered
                         dataSource={this.state.tags}
-                        renderItem={item => <List.Item>{item.nane} Download links {item.zipball_url}  {item.tarball_url}</List.Item>}
+                        renderItem={item => <List.Item>{item.name} download links: 
+                                        <Button type="link" onClick={() =>  window.open( item.zipball_Url, item.zipball_Url )}>
+                                            {'Zipball'}
+                                        </Button>
+                                        <Button type="link" onClick={() =>  window.open( item.tarball_Url, item.tarball_Url )}>
+                                            {'Tarball'}
+                                        </Button>
+                                        </List.Item>}        
                     />
                 </Modal>
             </div>

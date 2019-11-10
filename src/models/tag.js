@@ -4,13 +4,13 @@ export class Tag {
         {
             id,
             name,
-            zipball_url,
-            tarball_url
+            zipball_Url,
+            tarball_Url
         }
     ) {
         this.id = id
         this.name = name
-        this.zipball_url = zipball_url
-        this.tarball_url = tarball_url
+        this.zipball_Url = zipball_Url
+        this.tarball_Url = tarball_Url
     }
 }
