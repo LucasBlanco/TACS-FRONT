@@ -46,7 +46,7 @@ class Tags extends Component {
                     </Button>
                 <Modal
                     width='30%'
-                    title="tagsss"
+                    title=  "Repository's tags"
                     visible={this.state.visible}
                     onCancel={this.handleCancel}
                     footer={[
